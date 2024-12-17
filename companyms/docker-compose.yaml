@@ -13,7 +13,13 @@ services:
     networks:
       - postgres
     restart: unless-stopped
-
+  zipkin:
+    image: ghcr.io/openzipkin/zipkin-slim:${TAG:-latest}
+    container_name: zipkin
+    environment:
+      - STORAGE_TYPE=mem
+    ports:
+      - 9411:9411
   pgadmin:
     container_name: pgadmin_container
     image: dpage/pgadmin4
