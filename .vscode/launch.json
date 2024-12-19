@@ -1,0 +1,69 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "GatewayApplication",
+      "request": "launch",
+      "mainClass": "com.gatewayapp.gateway.GatewayApplication",
+      "projectName": "gateway"
+    },
+    {
+      "type": "java",
+      "name": "ConfigserverApplication",
+      "request": "launch",
+      "mainClass": "com.configapp.configserver.ConfigserverApplication",
+      "projectName": "configserver"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-CompanymsApplication<companyms>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.companyapp.companyms.CompanymsApplication",
+      "projectName": "companyms",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-JobmsApplication<jobms>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.jobapp.jobms.JobmsApplication",
+      "projectName": "jobms",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java", //VM Server
+      "name": "Spring Boot-JobmsApplication 9082",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.jobapp.jobms.JobmsApplication",
+      "projectName": "jobms",
+      "args": "",
+      "vmArgs": "-Dspring.profiles.active=dev -Dserver.port=9082",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-ReviewmsApplication<reviewms>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.reviewapp.reviewms.ReviewmsApplication",
+      "projectName": "reviewms",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-ServiceRegApplication<revice-reg>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.serviceapp.service_reg.ServiceRegApplication",
+      "projectName": "revice-reg",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
