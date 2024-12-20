@@ -19,6 +19,10 @@ import com.jobapp.jobms.job.external.Company;
 import com.jobapp.jobms.job.external.Review;
 import com.jobapp.jobms.job.mapper.JobMapper;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
+
 @Service
 public class JobServiceImpl implements JobService {
     private JobRepository jobRepository;
@@ -27,6 +31,8 @@ public class JobServiceImpl implements JobService {
     RestTemplate restTemplate;
     private CompanyClient companyClient;
     private ReviewClient reviewClient;
+
+    int attempt = 0;
 
     public JobServiceImpl(JobRepository jobRepository, CompanyClient companyClient, ReviewClient reviewClient) {
         this.jobRepository = jobRepository;
@@ -47,7 +53,12 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
+    // @CircuitBreaker(name = "companyBreaker", fallbackMethod =
+    // "companyBreakerFallback")
+    // @Retry(name = "companyBreaker", fallbackMethod = "companyBreakerFallback")
+    @RateLimiter(name = "companyBreaker", fallbackMethod = "companyBreakerFallback")
     public List<JobDTO> getJobs() {
+        System.out.println("attempt: " + ++attempt);
         List<Job> jobs = this.jobRepository.findAll();
         List<JobDTO> jobDTOs = new ArrayList<>();
         for (Job job : jobs) {
@@ -56,6 +67,12 @@ public class JobServiceImpl implements JobService {
         return jobs.stream()
                 .map(this::convertJobDTO)
                 .collect(Collectors.toList());
+    }
+
+    public List<String> companyBreakerFallback(Exception e) {
+        List<String> list = new ArrayList<>();
+        list.add("Dummy");
+        return list;
     }
 
     @Override
