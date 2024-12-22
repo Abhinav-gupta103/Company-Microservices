@@ -13,6 +13,91 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+
+  config-server-ms:
+    image: ag0537269/config-server-ms:latest
+    container_name: config-server-ms
+    ports:
+      - 8080:8080
+    depends_on:
+      - servicereg
+    networks:
+      - microservice-network
+      - postgres
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  servicereg:
+    image: ag0537269/servicereg:latest
+    container_name: servicereg
+    ports:
+      - 8761:8761
+    depends_on:
+      - rabbitmq
+      - zipkin
+      - postgres
+      - pgadmin
+    networks:
+      - microservice-network
+      - postgres
+
+  companyms:
+    image: ag0537269/companyms:latest
+    container_name: company
+    ports:
+      - 8081:8081
+    depends_on:
+      - servicereg
+      - config-server-ms
+    networks:
+      - microservice-network
+      - postgres
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  jobms:
+    image: ag0537269/jobms:latest
+    container_name: job
+    ports:
+      - 8082:8082
+    depends_on:
+      - servicereg
+      - config-server-ms
+    networks:
+      - microservice-network
+      - postgres
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://servicereg:8761/eureka
+
+  reviewms:
+    image: ag0537269/reviewms:latest
+    container_name: review
+    ports:
+      - 8083:8083
+    depends_on:
+      - servicereg
+      - config-server-ms
+    networks:
+      - microservice-network
+      - postgres
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  gateway-ms:
+    image: ag0537269/gateway-ms:latest
+    container_name: gateway
+    ports:
+      - 8084:8084
+    depends_on:
+      - servicereg
+      - config-server-ms
+    networks:
+      - microservice-network
+      - postgres
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
   zipkin:
     image: ghcr.io/openzipkin/zipkin-slim:${TAG:-latest}
     container_name: zipkin
@@ -20,6 +105,7 @@ services:
       - STORAGE_TYPE=mem
     ports:
       - 9411:9411
+
   pgadmin:
     container_name: pgadmin_container
     image: dpage/pgadmin4
@@ -34,16 +120,19 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
-    ports: 
+    ports:
       - 5672:5672
       - 15672:15672
     networks:
       - postgres
 
 networks:
+  microservice-network:
+    driver: bridge
   postgres:
     driver: bridge
 

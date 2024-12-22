@@ -1,10 +1,10 @@
-package com.serviceapp.revice_reg;
+package com.serviceapp.service_reg;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ReviceRegApplicationTests {
+class ServiceRegApplicationTests {
 
 	@Test
 	void contextLoads() {

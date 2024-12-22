@@ -10,9 +10,9 @@
 		<!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.serviceapp</groupId>
-	<artifactId>revice-reg</artifactId>
+	<artifactId>service-reg</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>revice-reg</name>
+	<name>service-reg</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>

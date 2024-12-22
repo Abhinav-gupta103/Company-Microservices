@@ -57,11 +57,11 @@
     },
     {
       "type": "java",
-      "name": "Spring Boot-ServiceRegApplication<revice-reg>",
+      "name": "Spring Boot-ServiceRegApplication<service-reg>",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "mainClass": "com.serviceapp.service_reg.ServiceRegApplication",
-      "projectName": "revice-reg",
+      "projectName": "service-reg",
       "args": "",
       "envFile": "${workspaceFolder}/.env"
     }

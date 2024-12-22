@@ -19,9 +19,9 @@ import com.jobapp.jobms.job.external.Company;
 import com.jobapp.jobms.job.external.Review;
 import com.jobapp.jobms.job.mapper.JobMapper;
 
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+// import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
-import io.github.resilience4j.retry.annotation.Retry;
+// import io.github.resilience4j.retry.annotation.Retry;
 
 @Service
 public class JobServiceImpl implements JobService {
